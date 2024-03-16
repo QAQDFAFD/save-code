@@ -1,0 +1,31 @@
+body {
+	@apply bg-slate-100;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 0 !important;
+	}
+}
+
+.drag {
+	-webkit-app-region: drag;
+}
+
+.no-drag,
+input,
+textarea,
+option {
+	-webkit-app-region: no-drag;
+}
+
+// 进度条样式
+// .scrollbar {
+// 	-webkit-scrollbar {
+// 		width: 0.5rem;
+// 	}
+// 	-webkit-scrollbar-thumb {
+// 		background-color: rgba(0, 0, 0, 0.2);
+// 		border-radius: 0.25rem;
+// 	}
+// }

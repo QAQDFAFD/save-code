@@ -1,0 +1,44 @@
+# Ignore all files in the .git directory
+.git/*
+
+# Ignore all files in the node_modules directory
+node_modules/*
+
+# Ignore all files in the dist directory
+dist/*
+
+# Ignore all files in the build directory
+build/*
+
+# Ignore all files in the coverage directory
+coverage/*
+
+# Ignore all files in the logs directory
+logs/*
+
+# Ignore all files in the tmp directory
+tmp/*
+
+# Ignore all files in the vendor directory
+vendor/*
+
+# Ignore all files with the .log extension
+**/*.log
+
+# Ignore all files with the .zip extension
+**/*.zip
+
+# Ignore all files with the .gz extension
+**/*.gz
+
+# Ignore all files with the .tar.gz extension
+**/*.tar.gz
+
+# Ignore all files with the .tgz extension
+**/*.tgz
+
+# Ignore all files with the .idea directory
+.idea/**
+
+*.md
+*.txt
