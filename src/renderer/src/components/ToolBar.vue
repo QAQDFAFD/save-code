@@ -6,7 +6,7 @@
 			placeholder="选择语言"
 			@change="changeLanguage">
 			<a-select-option
-				v-for="(item, index) in language"
+				v-for="(item, index) in props.language"
 				:key="index"
 				:value="item"></a-select-option>
 		</a-select>
@@ -15,7 +15,7 @@
 			style="width: 200px"
 			placeholder="切换样式"
 			@change="changeStyle">
-			<a-select-option v-for="(item, index) in theme" :key="index" :value="item">
+			<a-select-option v-for="(item, index) in props.theme" :key="index" :value="item">
 			</a-select-option>
 		</a-select>
 	</main>
