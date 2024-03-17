@@ -1,14 +1,4 @@
 <template>
-	<div>
-		<a-select v-model:value="languageVal" style="width: 200px" placeholder="选择语言">
-			<a-select-option value="jack">Jack</a-select-option>
-			<a-select-option value="lucy">Lucy</a-select-option>
-		</a-select>
-		<a-select v-model:value="styleVal" style="width: 200px" placeholder="切换样式">
-			<a-select-option value="jack">Jack</a-select-option>
-			<a-select-option value="lucy">Lucy</a-select-option>
-		</a-select>
-	</div>
 	<Codemirror
 		v-model="code"
 		placeholder="Code goes here..."
@@ -22,15 +12,35 @@
 		@focus="log('focus', $event)"
 		@blur="log('blur', $event)" />
 </template>
+|
 
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 import { javascript } from '@codemirror/lang-javascript'
-import { oneDark } from '@codemirror/theme-one-dark'
 
-const code = ref(`console.log('Hello, world!')`)
-const extensions = [javascript(), oneDark]
+console.log('javascript', javascript)
+
+const code = ref(`Hello, world`)
+
+type Props = {
+	theme: Array<any>
+	language: () => void
+}
+
+const props = defineProps<Props>()
+
+const extensions = computed(() => {
+	const result: any[] = []
+	if (props.language) {
+		console.log(props.language)
+		result.push(props.language()!)
+	}
+	if (props.theme) {
+		result.push(props.theme)
+	}
+	return result
+})
 
 // Codemirror EditorView instance ref
 const view = shallowRef()
@@ -52,8 +62,9 @@ const getCodemirrorStates = () => {
 
 const log = console.log
 
-const languageVal = ref(null)
-const styleVal = ref(null)
+// watchEffect(() => {
+// 	extensions = [props.language(), props.theme]
+// })
 </script>
 
 <style lang="scss" scoped>

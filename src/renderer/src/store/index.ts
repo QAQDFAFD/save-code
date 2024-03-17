@@ -15,3 +15,19 @@ export const useCodeItemStore = defineStore(
 		persist: true
 	}
 )
+
+export const useMirrorStore = defineStore(
+	'mirror',
+	() => {
+		// const mirrorLanguage = ref<() => void>(() => {})
+		const mirrorLanguage = ref<string>('javascript')
+		const mirrorTheme = ref<string>('oneDark')
+		return {
+			mirrorLanguage,
+			mirrorTheme
+		}
+	},
+	{
+		persist: true
+	}
+)
