@@ -85,3 +85,21 @@ export const useEditorStore = defineStore(
 		persist: true
 	}
 )
+
+export const useSettingStore = defineStore(
+	'setting',
+	() => {
+		const popUp = ref<string>('Ctrl + T')
+
+		const save = (val: string) => {
+			popUp.value = val
+		}
+		return {
+			save,
+			popUp
+		}
+	},
+	{
+		persist: true
+	}
+)

@@ -2,7 +2,7 @@
 	<main>
 		<ToolBar :theme="Object.keys(themes)" :language="Object.keys(language)" />
 		<Codemirror :theme="curTheme" :language="curLanguage!" />
-		<a-input v-model:value="codeItem.title" placeholder="代码片段名称" />
+		<a-input v-model:value="codeItem.title" placeholder="代码片段名称" spellcheck="false" />
 		<Editor />
 		<Button class="mt-2" />
 	</main>
@@ -39,7 +39,7 @@ const codeItem = useCodeItemStore()
 </script>
 
 <style lang="scss" scoped>
-:deep(.ant-select-single .ant-select-selector) {
+:deep(.ant-input) {
 	border-radius: 0;
 }
 </style>

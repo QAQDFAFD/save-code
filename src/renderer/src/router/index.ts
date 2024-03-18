@@ -4,10 +4,10 @@ import Center from '@renderer/components/Center.vue'
 import Setting from '@renderer/components/Setting.vue'
 
 const routes = [
-	{ name: 'Home', path: '/', component: Home },
+	{ name: 'Home', path: '/home', component: Home },
 	{
 		name: 'Center',
-		path: '/center',
+		path: '/',
 		component: Center
 	},
 	{

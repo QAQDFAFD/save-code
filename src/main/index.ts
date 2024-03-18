@@ -1,18 +1,19 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, globalShortcut, ipcMain, Tray, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+let mainWindow: BrowserWindow | null = null
+
 function createWindow(): void {
 	// Create the browser window.
-	const mainWindow = new BrowserWindow({
+	mainWindow = new BrowserWindow({
 		width: 400,
 		height: 700,
 		x: 1600,
 		y: 100,
-		show: false,
 		frame: false,
-		// resizable: false,
+		resizable: false,
 		autoHideMenuBar: true,
 		alwaysOnTop: true,
 		...(process.platform === 'linux' ? { icon } : {}),
@@ -25,7 +26,7 @@ function createWindow(): void {
 	mainWindow.webContents.openDevTools()
 
 	mainWindow.on('ready-to-show', () => {
-		mainWindow.show()
+		mainWindow!.show()
 	})
 
 	mainWindow.webContents.setWindowOpenHandler(details => {
@@ -40,6 +41,29 @@ function createWindow(): void {
 	} else {
 		mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
 	}
+
+	let tray: Tray | null = null
+
+	const iconPath = join(__dirname, '../../resources/icon.png')
+
+	tray = new Tray(iconPath)
+
+	const contextMenu = Menu.buildFromTemplate([
+		{
+			label: '退出',
+			click: () => {
+				mainWindow!.destroy()
+				app.quit()
+			}
+		}
+	])
+
+	tray.setToolTip('This is my application.')
+	tray.setContextMenu(contextMenu)
+
+	tray.on('click', () => {
+		mainWindow!.show()
+	})
 }
 
 // This method will be called when Electron has finished
@@ -57,7 +81,6 @@ app.whenReady().then(() => {
 	})
 
 	// IPC test
-	ipcMain.on('ping', () => console.log('pong'))
 
 	createWindow()
 
@@ -79,3 +102,24 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+ipcMain.handle('popUp', (_event, shortcut) => {
+	console.log('register-shortcut', shortcut)
+	const registered = globalShortcut.register(shortcut, () => {
+		if (mainWindow && !mainWindow.isVisible()) {
+			mainWindow.show()
+		} else {
+			console.log(mainWindow, mainWindow?.isVisible())
+			console.log('mainWindow is null or not minimized')
+		}
+	})
+	if (!registered) {
+		console.log('Failed to register shortcut')
+	}
+})
+
+ipcMain.handle('vanish', () => {
+	if (mainWindow) {
+		mainWindow.hide()
+	}
+})

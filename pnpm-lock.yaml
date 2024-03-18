@@ -140,7 +140,7 @@ devDependencies:
     specifier: ^28.2.0
     version: 28.2.7
   electron-builder:
-    specifier: ^24.9.1
+    specifier: ^24.13.3
     version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
   electron-vite:
     specifier: ^2.0.0
