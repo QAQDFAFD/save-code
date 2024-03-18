@@ -1,11 +1,14 @@
 <template>
-	<main class="p-4 pt-16">
+	<main class="p-4 top">
 		<a-input-search
-			v-model:value="value"
+			v-model:value="searchVal"
 			placeholder="input search text"
-			enter-button
-			@search="onSearch" />
-		<CodeList class="mt-6" />
+			@search="onSearch">
+			<template #enterButton>
+				<a-button type="primary">重置</a-button>
+			</template>
+		</a-input-search>
+		<CodeList class="mt-6" :searchVal="searchVal" />
 	</main>
 </template>
 
@@ -14,10 +17,14 @@ import CodeList from './CodeList.vue'
 
 import { ref } from 'vue'
 
-const value = ref('')
-const onSearch = (value: string) => {
-	console.log(value)
+const searchVal = ref('')
+const onSearch = () => {
+	searchVal.value = ''
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.top {
+	padding-top: 3rem !important;
+}
+</style>

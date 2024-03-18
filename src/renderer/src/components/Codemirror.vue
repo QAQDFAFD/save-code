@@ -1,6 +1,6 @@
 <template>
 	<Codemirror
-		v-model="code"
+		v-model="mirrorStore.mirrorCode"
 		placeholder="Code goes here..."
 		:style="{ height: '400px' }"
 		:autofocus="true"
@@ -8,20 +8,16 @@
 		:tab-size="4"
 		:extensions="extensions"
 		@ready="handleReady"
-		@change="log('change', $event)"
-		@focus="log('focus', $event)"
-		@blur="log('blur', $event)" />
+		@change="codeChange($event)" />
 </template>
 |
 
 <script setup lang="ts">
-import { computed, ref, shallowRef } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { Codemirror } from 'vue-codemirror'
-import { javascript } from '@codemirror/lang-javascript'
+import { useMirrorStore } from '@renderer/store'
 
-console.log('javascript', javascript)
-
-const code = ref(`Hello, world`)
+const mirrorStore = useMirrorStore()
 
 type Props = {
 	theme: Array<any>
@@ -62,9 +58,9 @@ const getCodemirrorStates = () => {
 
 const log = console.log
 
-// watchEffect(() => {
-// 	extensions = [props.language(), props.theme]
-// })
+const codeChange = (event: string) => {
+	mirrorStore.mirrorCode = event
+}
 </script>
 
 <style lang="scss" scoped>

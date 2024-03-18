@@ -1,5 +1,5 @@
 <template>
-	<main class="p-4 pt-16">
+	<main class="p-4 top">
 		<div>
 			<h2 class="text-slate-500 mb-4">快捷键配置</h2>
 			<div class="mb-6">
@@ -51,4 +51,8 @@ const onSearch = (value: string) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.top {
+	padding-top: 3rem !important;
+}
+</style>

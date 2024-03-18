@@ -1,30 +1,35 @@
 <template>
 	<main>
-		<CodeItem v-for="item in items" :key="item.code" :item="item" class="mb-4" />
+		<CodeItem v-for="item in items.arr" :key="item.code" :item="item" class="mb-4" />
 	</main>
 </template>
 
 <script setup lang="ts">
 import CodeItem from './CodeItem.vue'
+import { useCodeItemStore } from '@renderer/store'
+import { defineProps, reactive, watch } from 'vue'
 
-// 模拟数据
-const items = [
-	{
-		code: 'console.log("Hello World!")',
-		intro: '打印 Hello World!',
-		label: 'JavaScript'
-	},
-	{
-		code: 'print("Hello World!")',
-		intro: '打印 Hello World!',
-		label: 'Python'
-	},
-	{
-		code: 'fmt.Println("Hello World!")',
-		intro: '打印 Hello World!',
-		label: 'Go'
+const codeItemStore = useCodeItemStore()
+
+type Props = {
+	searchVal: string
+}
+const props = defineProps<Props>()
+
+import { CodeItemType } from '@renderer/types'
+
+const items = reactive<{ arr: CodeItemType[] }>({
+	arr: codeItemStore.codeItems
+})
+
+// 同时监听props.serarchVal 和 codeItemStore.codeItems
+watch([() => props.searchVal, () => codeItemStore.codeItems], ([searchVal, codeItems]) => {
+	if (searchVal === '') {
+		items.arr = codeItems
+	} else {
+		items.arr = codeItems.filter(item => item.title.includes(searchVal))
 	}
-]
+})
 </script>
 
 <style scoped></style>
