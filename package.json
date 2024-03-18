@@ -19,6 +19,15 @@
 				"zip"
 			],
 			"icon": "resources/icon.png"
+		},
+		"nsis": {
+			"oneClick": false,
+			"language": "2052",
+			"perMachine": true,
+			"allowElevation": true,
+			"allowToChangeInstallationDirectory": true,
+			"createDesktopShortcut": true,
+			"createStartMenuShortcut": false
 		}
 	},
 	"scripts": {
@@ -34,8 +43,7 @@
 		"build:unpack": "npm run build && electron-builder --dir",
 		"build:win": "npm run build && electron-builder --win",
 		"build:mac": "npm run build && electron-builder --mac",
-		"build:linux": "npm run build && electron-builder --linux",
-		"dist": "electron-builder --win --x64"
+		"build:linux": "npm run build && electron-builder --linux"
 	},
 	"dependencies": {
 		"@bytemd/plugin-gfm": "^1.21.0",
@@ -84,7 +92,6 @@
 		"@vue/eslint-config-typescript": "^12.0.0",
 		"autoprefixer": "^10.4.18",
 		"electron": "^28.2.0",
-		"electron-builder": "^24.13.3",
 		"electron-vite": "^2.0.0",
 		"eslint": "^8.56.0",
 		"eslint-plugin-vue": "^9.20.1",

@@ -15,7 +15,7 @@ function createWindow(): void {
 		frame: false,
 		resizable: false,
 		autoHideMenuBar: true,
-		alwaysOnTop: true,
+		alwaysOnTop: false,
 		...(process.platform === 'linux' ? { icon } : {}),
 		webPreferences: {
 			preload: join(__dirname, '../preload/index.js'),
@@ -23,7 +23,7 @@ function createWindow(): void {
 		}
 	})
 
-	mainWindow.webContents.openDevTools()
+	// mainWindow.webContents.openDevTools()
 
 	mainWindow.on('ready-to-show', () => {
 		mainWindow!.show()
@@ -105,11 +105,11 @@ app.on('window-all-closed', () => {
 
 ipcMain.handle('popUp', (_event, shortcut) => {
 	console.log('register-shortcut', shortcut)
+	globalShortcut.unregisterAll()
 	const registered = globalShortcut.register(shortcut, () => {
 		if (mainWindow && !mainWindow.isVisible()) {
 			mainWindow.show()
 		} else {
-			console.log(mainWindow, mainWindow?.isVisible())
 			console.log('mainWindow is null or not minimized')
 		}
 	})
